@@ -29,30 +29,9 @@ const StyledButton = styled.button`
   transition: all 0.5s;
   cursor: pointer;
   letter-spacing: 3px;
-
-  :hover span {
-    padding-right: 25px;
-  }
-
-  :hover span:after {
-    opacity: 1;
-    right: 0;
-  }
-`;
-
-const ButtonSpan = styled.span`
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-
-  :after {
-    content: " \00bb ";
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
+  :hover {
+    color: white;
+    background: #e5627e;
   }
 `;
 
@@ -244,7 +223,7 @@ function Search() {
               getAccountRepo({ variables: { user: inputAccount } });
             }}
           >
-            <ButtonSpan>Search</ButtonSpan>
+            <div>Search</div>
           </StyledButton>
           {data
             ? data.user.repositories.edges.map((edge, key) => (
@@ -261,7 +240,11 @@ function Search() {
                     <SperateLine></SperateLine>
                     <RepoInfo>
                       <RepoName> {edge.node.name}</RepoName>
-                      <RepoURL>{edge.node.url}</RepoURL>
+                      <RepoURL>
+                        <a href={edge.node.url} target="_blank">
+                          {edge.node.url}
+                        </a>
+                      </RepoURL>
                     </RepoInfo>
                   </UpperData>
                   {edge.node.primaryLanguage === null ? (

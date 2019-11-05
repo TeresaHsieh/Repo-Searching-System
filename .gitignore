@@ -24,3 +24,4 @@ yarn-error.log*
 
 # token
 githubToken.js
+firebaseConfig.js

@@ -1,14 +1,20 @@
 import React from "react";
+import Header from "./Header";
+import styled from "styled-components";
 
-class NotFound extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const wrongCode = styled.div`
+  color: white;
+  font-size: 50px;
+`;
 
-  render() {
-    return <div>NotFound</div>;
-  }
+function NotFound() {
+  return (
+    <>
+      <Header />
+      <wrongCode>404</wrongCode>
+      <div>NotFound</div>
+    </>
+  );
 }
 
 export default NotFound;
