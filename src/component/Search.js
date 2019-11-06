@@ -271,7 +271,11 @@ function Search() {
                         {edge.node.url}{" "}
                         <a href={edge.node.url} target="_blank">
                           {" "}
-                          <img src={Link} alt="external-link" width="20px" />
+                          <img
+                            src={`/${Link}`}
+                            alt="external-link"
+                            width="20px"
+                          />
                         </a>
                       </RepoURL>
                     </RepoInfo>
