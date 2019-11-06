@@ -268,14 +268,8 @@ function Search() {
                     <RepoInfo>
                       <RepoName> {edge.node.name}</RepoName>
                       <RepoURL>
-                        {edge.node.url}{" "}
                         <a href={edge.node.url} target="_blank">
-                          {" "}
-                          <img
-                            src={`/${Link}`}
-                            alt="external-link"
-                            width="20px"
-                          />
+                          {edge.node.url}
                         </a>
                       </RepoURL>
                     </RepoInfo>
