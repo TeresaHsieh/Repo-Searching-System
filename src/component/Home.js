@@ -30,7 +30,6 @@ const H2 = styled.div`
 const Intro = styled.div`
   width: 100%;
   height: 100%;
-
   font-weight: bold;
   margin-top: 30px;
 `;

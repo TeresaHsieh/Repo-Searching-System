@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled from "styled-components";
-import { gql } from "apollo-boost";
+import { gql } from "apollo-boost"; // import the gql function for parsing query string into a query document.
 import { useLazyQuery } from "@apollo/react-hooks";
-import Link from "../img/link.png";
+import Link from "../img/link.png"; // leverages the Hooks API to share GraphQL data with UI.
 
 const StyledInput = styled.input`
   width: 50%;
@@ -77,8 +77,6 @@ const UpperData = styled.div`
   margin-bottom: 30px;
 `;
 
-const BottomData = styled.div``;
-
 const Language = styled.div`
   background-color: rgb(249, 221, 205);
   color: rgb(32, 20, 57);
@@ -130,6 +128,24 @@ const RepoInfo = styled.div`
   word-break: break-all;
 `;
 
+const Error = styled.div`
+  font-size: 50px;
+  color: white;
+  margin-bottom: 10px;
+`;
+
+const ErrorMessage = styled.div`
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 3px;
+`;
+
 const getRepo = gql`
   query Schema($user: String!, $curs: String) {
     user(login: $user) {
@@ -158,8 +174,6 @@ function Search() {
 
   const [inputAccount, setInputAccount] = useState("");
 
-  const [canUpdateQuery, setCanUpdateQuery] = useState(false);
-
   useEffect(() => {
     window.addEventListener("scroll", fetchForMoreRepo);
     return () => {
@@ -179,8 +193,8 @@ function Search() {
             ].cursor
         },
         updateQuery: (preResult, { fetchMoreResult }) => {
-          console.log("preResult", preResult);
-          console.log(fetchMoreResult);
+          // console.log("preResult", preResult);
+          // console.log(fetchMoreResult);
           const preEdges = preResult.user.repositories.edges;
           const newEdges = fetchMoreResult.user.repositories.edges;
           if (preEdges[0] === newEdges[0]) {
@@ -198,7 +212,7 @@ function Search() {
         }
       });
 
-      console.log("fetching");
+      // console.log("fetching");
     }
   }
 
@@ -206,7 +220,18 @@ function Search() {
     setInputAccount(e.target.value);
   }
 
-  if (error) return <p> Error :( </p>;
+  if (error) {
+    return (
+      <>
+        <Header />
+        <ErrorMessage>
+          <Error> Can Not Find This Account.</Error>
+          <Error> Please Try Again. </Error>
+        </ErrorMessage>
+      </>
+    );
+  }
+
   if (data) {
     console.log(data.user.repositories.edges);
   }
