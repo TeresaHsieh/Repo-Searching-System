@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import { gql } from "apollo-boost"; // import the gql function for parsing query string into a query document.
-import { useLazyQuery } from "@apollo/react-hooks";
-import Link from "../img/link.png"; // leverages the Hooks API to share GraphQL data with UI.
+import { useLazyQuery } from "@apollo/react-hooks"; // leverages the Hooks API to share GraphQL data with UI.
 
+// Styled-components
 const StyledInput = styled.input`
   width: 50%;
   text-indent: 10px;
@@ -146,6 +146,7 @@ const ErrorMessage = styled.div`
   letter-spacing: 3px;
 `;
 
+// Query Type Defination
 const getRepo = gql`
   query Schema($user: String!, $curs: String) {
     user(login: $user) {
@@ -166,12 +167,14 @@ const getRepo = gql`
   }
 `;
 
+// Search Component
 function Search() {
   const [
     getAccountRepo,
     { loading, data, error, fetchMore, networkStatus }
-  ] = useLazyQuery(getRepo, { notifyOnNetworkStatusChange: true });
-
+  ] = useLazyQuery(getRepo, {
+    notifyOnNetworkStatusChange: true
+  });
   const [inputAccount, setInputAccount] = useState("");
 
   useEffect(() => {
@@ -182,37 +185,44 @@ function Search() {
   });
 
   function fetchForMoreRepo() {
-    if (data && networkStatus === 7) {
-      fetchMore({
-        query: getRepo,
-        variables: {
-          user: inputAccount,
-          curs:
-            data.user.repositories.edges[
-              data.user.repositories.edges.length - 1
-            ].cursor
-        },
-        updateQuery: (preResult, { fetchMoreResult }) => {
-          // console.log("preResult", preResult);
-          // console.log(fetchMoreResult);
-          const preEdges = preResult.user.repositories.edges;
-          const newEdges = fetchMoreResult.user.repositories.edges;
-          if (preEdges[0] === newEdges[0]) {
-            return preResult;
-          }
-          return {
-            user: {
-              ...preResult.user,
-              repositories: {
-                ...preResult.user.repositories,
-                edges: [...preEdges, ...newEdges]
-              }
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+      if (data && networkStatus === 7) {
+        fetchMore({
+          query: getRepo,
+          variables: {
+            user: inputAccount,
+            curs:
+              data.user.repositories.edges[
+                data.user.repositories.edges.length - 1
+              ].cursor
+          },
+          updateQuery: (preResult, { fetchMoreResult }) => {
+            const preEdges = preResult.user.repositories.edges;
+            const newEdges = fetchMoreResult.user.repositories.edges;
+            console.log("preEdges", preEdges);
+            console.log("newEdges", newEdges);
+            const repeatIndex = preEdges.length - newEdges.length;
+            if (preEdges[repeatIndex] === newEdges[0]) {
+              console.log("一樣囉！", repeatIndex);
+              return preResult;
             }
-          };
-        }
-      });
+            // if (preEdges[preEdges.length] === newEdges[newEdges.length]) {
+            //   console.log("一樣囉！");
+            //   return preResult;
+            // }
 
-      // console.log("fetching");
+            return {
+              user: {
+                ...preResult.user,
+                repositories: {
+                  ...preResult.user.repositories,
+                  edges: [...preEdges, ...newEdges]
+                }
+              }
+            };
+          }
+        });
+      }
     }
   }
 
@@ -252,38 +262,35 @@ function Search() {
           >
             <div>Search</div>
           </StyledButton>
-          {data
-            ? data.user.repositories.edges.map((edge, key) => (
-                <EachRepo key={key}>
-                  <UpperData>
-                    <CreatedDate>
-                      <CreatedYear>
-                        {edge.node.createdAt.split("", 4)}
-                      </CreatedYear>
-                      <CreatedMonth>
-                        {edge.node.createdAt.slice(5, 7)}
-                      </CreatedMonth>
-                    </CreatedDate>
-                    <SperateLine></SperateLine>
-                    <RepoInfo>
-                      <RepoName> {edge.node.name}</RepoName>
-                      <RepoURL>
-                        <a href={edge.node.url} target="_blank">
-                          {edge.node.url}
-                        </a>
-                      </RepoURL>
-                    </RepoInfo>
-                  </UpperData>
-                  {edge.node.primaryLanguage === null ? (
-                    <Language>Unknown</Language>
-                  ) : (
-                    <Language>{edge.node.primaryLanguage.name}</Language>
-                  )}
-                </EachRepo>
-              ))
-            : /* <p>nothing yet...</p> */
-              null}
-          {/* {networkStatus === 3 ? <p>fetching...</p> : null} */}
+          {data &&
+            data.user.repositories.edges.map((edge, key) => (
+              <EachRepo key={key}>
+                <UpperData>
+                  <CreatedDate>
+                    <CreatedYear>
+                      {edge.node.createdAt.split("", 4)}
+                    </CreatedYear>
+                    <CreatedMonth>
+                      {edge.node.createdAt.slice(5, 7)}
+                    </CreatedMonth>
+                  </CreatedDate>
+                  <SperateLine></SperateLine>
+                  <RepoInfo>
+                    <RepoName> {edge.node.name}</RepoName>
+                    <RepoURL>
+                      <a href={edge.node.url} target="_blank">
+                        {edge.node.url}
+                      </a>
+                    </RepoURL>
+                  </RepoInfo>
+                </UpperData>
+                {edge.node.primaryLanguage === null ? (
+                  <Language>Unknown</Language>
+                ) : (
+                  <Language>{edge.node.primaryLanguage.name}</Language>
+                )}
+              </EachRepo>
+            ))}
         </div>
       </div>
     </>

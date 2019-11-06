@@ -91,14 +91,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     font-size:20px;
     font-family: "Noto Sans TC", "微軟正黑體", "新細明體", arial, sans-serif;
-    /* background: linear-gradient(
-    120deg,
-    rgba(242, 141, 162, 0.7) 0%,
-    rgba(237, 126, 149, 1) 25%,
-    rgba(229, 98, 126, 1) 49%,
-    rgba(228, 79, 110, 1) 76%,
-    rgba(227, 65, 99, 1) 100%
-  );  */
     background: rgb(255,201,163);
     background: linear-gradient(160deg, rgba(255,201,163,1) 0%, rgba(213,106,127,1) 100%); 
     background-repeat: no-repeat; 

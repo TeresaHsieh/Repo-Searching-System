@@ -3,8 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import ApolloClient from "apollo-boost";
-// To connect Apollo Client to React
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloProvider } from "@apollo/react-hooks"; // To connect Apollo Client to React
 import token from "./config/githubToken";
 
 const client = new ApolloClient({

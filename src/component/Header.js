@@ -33,26 +33,20 @@ const StyledIMG = styled.img`
   margin-left: 30px;
 `;
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <>
-        <StyledHeader>
-          <Link to="/">
-            <StyledIMG src={logo} />
-          </Link>
-          <Nav>
-            <StyledNavLink to="/search"> Getting Started </StyledNavLink>
-          </Nav>
-        </StyledHeader>
-      </>
-    );
-  }
+// Header Component
+function Header() {
+  return (
+    <>
+      <StyledHeader>
+        <Link to="/">
+          <StyledIMG src={logo} />
+        </Link>
+        <Nav>
+          <StyledNavLink to="/search"> Getting Started </StyledNavLink>
+        </Nav>
+      </StyledHeader>
+    </>
+  );
 }
 
 export default Header;

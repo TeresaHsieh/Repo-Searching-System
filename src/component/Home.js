@@ -3,6 +3,7 @@ import Header from "./Header";
 import styled from "styled-components";
 import Demo from "../img/demo.gif";
 
+// Styled-components
 const About = styled.div`
   width: 80%;
   display: flex;
@@ -43,28 +44,22 @@ const DemoBackground = styled.div`
   box-shadow: 7px 9px 28px 1px rgba(201, 201, 201, 0.92);
 `;
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <>
-        <Header />
-        <About>
-          <Intro>
-            <H1>Check Your Repo Easily!</H1>
-            <H2>Just Type In The GitHub Account You Wanna Search!</H2>
-          </Intro>
-          <DemoBackground>
-            <img src={Demo} alt="demo-video" />
-          </DemoBackground>
-        </About>
-      </>
-    );
-  }
+// Home Component
+function Home() {
+  return (
+    <>
+      <Header />
+      <About>
+        <Intro>
+          <H1>Check Your Repo Easily!</H1>
+          <H2>Just Type In The GitHub Account You Wanna Search!</H2>
+        </Intro>
+        <DemoBackground>
+          <img src={Demo} alt="demo-video" />
+        </DemoBackground>
+      </About>
+    </>
+  );
 }
 
 export default Home;

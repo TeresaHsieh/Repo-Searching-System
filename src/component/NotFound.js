@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import styled from "styled-components";
 
+// Styled-components
 const WrongCode = styled.span`
   color: white;
   font-size: 250px;
@@ -24,6 +25,7 @@ const WrongMinder = styled.span`
   transform: translate(-50%, -50%);
 `;
 
+// NotFound Component
 function NotFound() {
   return (
     <>
