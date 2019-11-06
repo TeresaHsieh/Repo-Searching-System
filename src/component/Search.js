@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useLazyQuery } from "@apollo/react-hooks";
+import Link from "../img/link.png";
 
 const StyledInput = styled.input`
   width: 50%;
@@ -87,14 +88,16 @@ const Language = styled.div`
   position: absolute;
   right: 20px;
   bottom: 15px;
+  letter-spacing: 2px;
+  font-size: 18px;
 `;
 
 const CreatedDate = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   position: absolute;
+  top: 24%;
   left: 30px;
 `;
 
@@ -113,9 +116,10 @@ const CreatedMonth = styled.div`
 
 const SperateLine = styled.div`
   border-left: 1px solid rgb(144, 151, 167);
-  height: 80px;
+  height: 100px;
   position: absolute;
   left: 120px;
+  top: 18%;
 `;
 
 const RepoInfo = styled.div`
@@ -163,13 +167,6 @@ function Search() {
     };
   });
 
-  if (error) return <p> Error :( </p>;
-  if (data) {
-    console.log(data.user.repositories.edges);
-  }
-
-  console.log(networkStatus);
-
   function fetchForMoreRepo() {
     if (data && networkStatus === 7) {
       fetchMore({
@@ -209,6 +206,11 @@ function Search() {
     setInputAccount(e.target.value);
   }
 
+  if (error) return <p> Error :( </p>;
+  if (data) {
+    console.log(data.user.repositories.edges);
+  }
+
   return (
     <>
       <Header />
@@ -241,8 +243,10 @@ function Search() {
                     <RepoInfo>
                       <RepoName> {edge.node.name}</RepoName>
                       <RepoURL>
+                        {edge.node.url}{" "}
                         <a href={edge.node.url} target="_blank">
-                          {edge.node.url}
+                          {" "}
+                          <img src={Link} alt="external-link" width="20px" />
                         </a>
                       </RepoURL>
                     </RepoInfo>

@@ -24,6 +24,7 @@ const H2 = styled.div`
   font-size: 20px;
   color: #e5627e;
   margin-top: 30px;
+  line-height: 1.5em;
 `;
 
 const Intro = styled.div`
