@@ -146,7 +146,7 @@ const ErrorMessage = styled.div`
   letter-spacing: 3px;
 `;
 
-// Query Type Defination
+// Query String Defination
 const getRepo = gql`
   query Schema($user: String!, $curs: String) {
     user(login: $user) {
@@ -199,17 +199,13 @@ function Search() {
           updateQuery: (preResult, { fetchMoreResult }) => {
             const preEdges = preResult.user.repositories.edges;
             const newEdges = fetchMoreResult.user.repositories.edges;
-            console.log("preEdges", preEdges);
-            console.log("newEdges", newEdges);
+            // console.log("preEdges", preEdges);
+            // console.log("newEdges", newEdges);
             const repeatIndex = preEdges.length - newEdges.length;
             if (preEdges[repeatIndex] === newEdges[0]) {
-              console.log("一樣囉！", repeatIndex);
+              // console.log("一樣囉！", repeatIndex);
               return preResult;
             }
-            // if (preEdges[preEdges.length] === newEdges[newEdges.length]) {
-            //   console.log("一樣囉！");
-            //   return preResult;
-            // }
 
             return {
               user: {
